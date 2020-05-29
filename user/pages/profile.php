@@ -160,7 +160,7 @@ if (isset($_SESSION["loggedin"]) ){
                                                 }
                                                 ?>
 
-
+                                                <button class="login100-form-btn"> Change Password </button>
                                         </div>
 
                                     </div>

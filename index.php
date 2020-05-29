@@ -1,3 +1,4 @@
+
 <?php
 session_start();
 if (isset($_SESSION["loggedin"]) ){
@@ -6,17 +7,18 @@ if (isset($_SESSION["loggedin"]) ){
             header("Location:./user/index.php");
         } else if ($_SESSION["usertype"] == 2) {
 
-            echo $_SESSION["usertype"];
+            header("Location:./merchant/index.php");
         } else {
             session_destroy();
         }
     }
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>ChupIn</title>
+	<title>Login V4</title>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 <!--===============================================================================================-->	
@@ -26,7 +28,7 @@ if (isset($_SESSION["loggedin"]) ){
 <!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
 <!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="fonts/Linearicons-Free-v1.0.0/icon-font.min.css">
+	<link rel="stylesheet" type="text/css" href="fonts/iconic/css/material-design-iconic-font.min.css">
 <!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="vendor/animate/animate.css">
 <!--===============================================================================================-->	
@@ -43,47 +45,60 @@ if (isset($_SESSION["loggedin"]) ){
 <!--===============================================================================================-->
 </head>
 <body>
-
+	
 	<div class="limiter">
-
-		<div class="container-login100">
-			<div class="wrap-login100">
-                <div class="login100-header" >
-                <img class="logo" src="./images/chuplogo.jpeg" alt="chuplogo">
-                <img class="name" src="./images/chupname.jpeg" alt="chupname">
-                </div>
-				<div class="login100-form-title" style="background-image: url(images/bg.jpg);">
-					<span class="login100-form-title-1">
-						  Sign In
-					</span>
-				</div>
-
+		<div class="container-login100" style="background-image: url('images/bg-01.jpg');">
+			<div class="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-54">
 				<form class="login100-form validate-form" method="post" action="./action/login.php">
-					<div class="wrap-input100 validate-input m-b-26" data-validate="Username is required">
+					<span class="login100-form-title p-b-49">
+						Login
+					</span>
+
+					<div class="wrap-input100 validate-input m-b-23" data-validate = "Email is reauired">
 						<span class="label-input100">Email</span>
-						<input class="input100" type="text" name="email" placeholder="Enter Email">
-						<span class="focus-input100"></span>
+						<input class="input100" type="email" name="email" placeholder="Enter Email">
+						<span class="focus-input100" data-symbol="&#xf206;"></span>
 					</div>
 
-					<div class="wrap-input100 validate-input m-b-18" data-validate = "Password is required">
+					<div class="wrap-input100 validate-input" data-validate="Password is required">
 						<span class="label-input100">Password</span>
-						<input class="input100" type="password" name="pwd" placeholder="Enter password">
-						<span class="focus-input100"></span>
+						<input class="input100" type="password" name="pwd" placeholder="Enter Password">
+						<span class="focus-input100" data-symbol="&#xf190;"></span>
 					</div>
-
-					<div class="flex-sb-m w-full p-b-30">
-
+					
+					<div class="text-right p-t-8 p-b-31">
+						<a href="./reset/index.php">
+							Forgot password?
+						</a>
 					</div>
-
+					
 					<div class="container-login100-form-btn">
-						<button class="login100-form-btn">
-							Login
-						</button>
+						<div class="wrap-login100-form-btn">
+							<div class="login100-form-bgbtn"></div>
+							<button class="login100-form-btn">
+								Login
+							</button>
+						</div>
+					</div>
+
+
+
+					<div class="flex-col-c p-t-20">
+						<span class="txt1 p-b-17">
+							Or Sign Up Using
+						</span>
+
+						<a href="https:chupnow.com/user-registration" class="txt2">
+							Sign Up
+						</a>
 					</div>
 				</form>
 			</div>
 		</div>
 	</div>
+	
+
+	<div id="dropDownSelect1"></div>
 	
 <!--===============================================================================================-->
 	<script src="vendor/jquery/jquery-3.2.1.min.js"></script>

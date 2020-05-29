@@ -6,17 +6,25 @@ include("../../includes/con.php");
 error_reporting(E_ALL);
 ini_set('display_errors', '1');
 $userid = $_SESSION["id"];
+$code = $_POST["rescode"];
 
 
-echo "RestaurantID: ".$_POST["merchantid"];
 if (isset($_POST["temperature"])) {
 
     $temp = $_POST["temperature"];
-    if (isset($_POST["merchantid"])) {
-        $merchantid = $_POST["merchantid"];
+    if (isset($_POST["rescode"])) {
+        $resC = $_POST["rescode"];
+
+        $query = "SELECT id FROM users WHERE code = $resC";
+        $result = mysqli_query($con, $query);
+        $row = mysqli_fetch_assoc($result);
+        $code2 = $row["id"];
+        
+        if (mysqli_num_rows($result)==1){
+
 
         $sql = "INSERT INTO checkin ( merchantid, userid, datetime, temperature)
-VALUES ( $merchantid, $userid, NOW() , $temp)";
+VALUES ( $code2, $userid, NOW() , $temp)";
 
         if ($con->query($sql) === TRUE) {
             echo("<script LANGUAGE='JavaScript'>
@@ -27,6 +35,13 @@ VALUES ( $merchantid, $userid, NOW() , $temp)";
 
             echo "Error: " . $sql . "<br>" . $con->error;
             die();
+        }
+        }
+        else {
+               echo("<script LANGUAGE='JavaScript'>
+    window.alert('Invalid Code');
+    window.location.href='../index.php';
+    </script>");
         }
     }
     else {

@@ -115,9 +115,11 @@ if (isset($_SESSION["loggedin"]) ){
                            <table class="table-bordered">
                                <thead class="table header">
                                     <tr>
+                                        <h5><b>
                                         <td>Restaurant Name</td>
                                         <td>Date and Time</td>
                                         <td>Temperature</td>
+                                        </h5></b>
                                     </tr>
                                </thead>
                                <tbody class="header">

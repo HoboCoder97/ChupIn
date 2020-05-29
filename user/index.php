@@ -24,6 +24,7 @@ if (isset($_SESSION["loggedin"]) ){
   <title>
     ChupIn
   </title>
+    <link rel="stylesheet" href="./assets/css/select2.min.css" />
   <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
   <!--     Fonts and icons     -->
   <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet" />
@@ -110,55 +111,51 @@ if (isset($_SESSION["loggedin"]) ){
                 <h5 class="card-category"></h5>
                 <h4 class="card-title">Chup In Now!</h4>
 
+
               </div>
               <div class="card-body">
                   <div class="rs-select2 js-select-simple select--search">
-                  <form method="post" action="./actions/checkin.php">
-                      <label>
-                          <select name="merchantid" class="select2-hidden-accessible checkinselect">
-                              <option disabled="disabled" selected="selected">Select Restaurant</option>
-                          <?php
-                            include ("../includes/con.php");
-                            $sql = "SELECT restaurantname, id FROM users WHERE usertype=2";
+                  <form name="myForm" method="post" action="./actions/checkin.php" >
+                      <br/><br/>
 
 
-        if($stmt = mysqli_prepare($con, $sql)){
-            // Attempt to execute the prepared statement
-            if(mysqli_stmt_execute($stmt)){
-                // Store result
-                mysqli_stmt_store_result($stmt);
+                      <div class="input-group">
+                      <input onchange="showCustomer(this.value)" type="text" id="txtHint" name="rescode" placeholder="Restaurant Code" class="input--style-3 checkinselect" >
 
-                // Check if username exists, if yes then verify password
-                for($count=0; $count< mysqli_stmt_num_rows($stmt); $count++){
-                    // Bind result variables
-                    mysqli_stmt_bind_result($stmt, $name, $id);
-                    if(mysqli_stmt_fetch($stmt)){
-
-                        echo "<option value=\"$id\">$name</option>";
-                        } else{
-                            // Display an error message if password is not valid
-
-                        }
-                    }
-                }
-
-            // Close statement
-            mysqli_stmt_close($stmt);
-        }
-
-                          ?>
-                          </select>
-                      </label>
+                      </div>
                       <br/>
+                      <script>
+                          function showCustomer(str) {
+                              var xhttp;
+                              if (str === "") {
+                                  document.getElementById("txtHint").innerHTML = "";
+                                  return;
+                              }
+                              xhttp = new XMLHttpRequest();
+                              xhttp.onreadystatechange = function() {
+                                  if (this.readyState === 4 && this.status === 200) {
+                                      document.getElementById("txtRes").innerHTML = this.responseText;
+                                  }
+                              };
+                              xhttp.open("GET", "./actions/check.php?q="+str, true);
+                              xhttp.send();
+                          }
+                      </script>
+
+                      <div id="input-group">
+                          Restaurant Name: <div id="txtRes">None</div>
+                      </div>
                       <br/>
                       <div class="input-group">
-                          <input class="input--style-3 checkinselect" type="number" placeholder="Temperature" name="temperature">
+                          <input class="input--style-3 checkinselect" step="0.1" type="number" placeholder="Temperature" name="temperature">
                       </div>
-                      <br/><br/>
+                      <br/>
+
                       <div class="input-group">
                           <input class="input--style-3 checkinselect" type="submit" value="Check In">
                       </div>
                   </form>
+
                 </div>
               </div>
               <div class="card-footer">
@@ -211,7 +208,16 @@ if (isset($_SESSION["loggedin"]) ){
   <!-- Control Center for Now Ui Dashboard: parallax effects, scripts for the example pages etc -->
   <script src="./assets/js/now-ui-dashboard.min.js?v=1.5.0" type="text/javascript"></script><!-- Now Ui Dashboard DEMO methods, don't include it in your project! -->
   <script src="./assets/demo/demo.js"></script>
-  <script>
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js">
+      </script>
+      <script src="./assets/js/select2.min.js"></script>
+      <script>
+          $("#ddl").select2( {
+              placeholder: "Select Restaurant",
+              allowClear: true
+          } );
+      </script>
+      <script>
     $(document).ready(function() {
       // Javascript method's body can be found in assets/js/demos.js
       demo.initDashboardPageCharts();
